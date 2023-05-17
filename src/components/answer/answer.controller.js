@@ -24,6 +24,7 @@ exports.addAnswer = async (req, res) => {
   }
 };
 
+//get answers
 //get answer to that question
 exports.getAnswerByquestionId = async (req, res) => {
   try {
