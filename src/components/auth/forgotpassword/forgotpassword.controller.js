@@ -52,6 +52,7 @@ module.exports = {
       };
       transporter.sendMail(mailOptions, (error) => {
         if (error) {
+          console.log('this is error')
           res.status(500).json({
             status: 500,
             message: "Server Error",
