@@ -15,18 +15,38 @@ module.exports = {
           message: "User not found",
         });
       }
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.emailUser,
-          pass: process.env.emailPassword,
+      const transporter = nodemailer.createTransport(
+        {
+          service: "gmail",
+          auth: {
+            user: process.env.emailUser,
+            pass: process.env.emailPassword,
+          },
         },
-      });
+        { from: "TechForum" }
+      );
+      let from = `TechForum <techforum.forum@gmail.com>`;
+      const ejsOptions = {
+        viewEngine: {
+          partialsDir: path.resolve("./views/"),
+          defaultLayout: false,
+        },
+        viewPath: path.resolve("./views/"),
+        extName: ".ejs", // Specify the file extension for EJS templates
+      };
+      
+      transporter.use("compile", ejs(ejsOptions)); // Use EJS as the template engine
+      
       const mailOptions = {
-        from: process.env.emailUser,
+        from: from,
         to: emailId,
         subject: "Reset Your Password",
-        html: `<p>Click <a href="${url}">here</a> to reset your password.</p>`,
+        template: "email.ejs",
+        context: {
+          name: user.firstName,
+          emailId: user.emailId,
+          link: url + user._id,
+        },
       };
       transporter.sendMail(mailOptions, (error) => {
         if (error) {
@@ -97,7 +117,7 @@ module.exports = {
         .toString("hex");
       user.password = hashedPassword;
       await user.save();
-      res.clearCookie("email", { path: '/forgotpassword' }).status(201).json({
+      res.clearCookie("email", { path: "/forgotpassword" }).status(201).json({
         status: 201,
         message: "Password updated successfully",
       });
