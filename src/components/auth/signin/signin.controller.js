@@ -26,9 +26,9 @@ module.exports = {
           res
             .cookie("jwt", token, {
               httpOnly: true,
-              path: `'https://techforumbackend-yf2m.onrender.com/users'`,
+              path: '/users',
               expires: expirationTime,
-              sameSite: none
+              sameSite: 'None'
             })
             .status(200)
             .json({
