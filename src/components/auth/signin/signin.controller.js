@@ -26,7 +26,7 @@ module.exports = {
           res
             .cookie("jwt", token, {
               httpOnly: true,
-              path: "/",
+              path: "/users",
               expires: expirationTime,
               SameSite: None,
               Secure: true,
