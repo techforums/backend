@@ -1,8 +1,6 @@
 const User = require("../../../models/user");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
-const path = require("path");
 require("dotenv").config();
 
 module.exports = {
@@ -17,39 +15,19 @@ module.exports = {
           message: "User not found",
         });
       }
-
-      const transporter = nodemailer.createTransport(
-        {
-          service: "gmail",
-          auth: {
-            user: process.env.emailUser,
-            pass: process.env.emailPassword,
-          },
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.emailUser,
+          pass: process.env.emailPassword,
         },
-        { from: "TechForum" }
-      );
-      let from = `TechForum <techforum.forum@gmail.com>`;
-
-      const handlebarOptions = {
-        viewEngine: {
-          partialsDir: path.resolve("./views/"),
-          defaultLayout: false,
-        },
-        viewPath: path.resolve("./views/"),
-      };
-      transporter.use("compile", hbs(handlebarOptions));
+      });
       const mailOptions = {
-        from: from,
+        from: process.env.emailUser,
         to: emailId,
         subject: "Reset Your Password",
-        template: "email",
-        context: {
-          name: user.firstName,
-          emailId: user.emailId,
-          link: url + user._id,
-        },
+        html: `<p>Click <a href="${url}">here</a> to reset your password.</p>`,
       };
-
       transporter.sendMail(mailOptions, (error) => {
         if (error) {
           res.status(500).json({
