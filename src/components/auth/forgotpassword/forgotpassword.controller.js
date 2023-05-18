@@ -95,7 +95,7 @@ module.exports = {
         .toString("hex");
       user.password = hashedPassword;
       await user.save();
-      res.clearCookie("email", { path: "https://techforumbackend-yf2m.onrender.com/forgotpassword" }).status(201).json({
+      res.clearCookie("email", { path: `'https://techforumbackend-yf2m.onrender.com/forgotpassword'` }).status(201).json({
         status: 201,
         message: "Password updated successfully",
       });
