@@ -40,7 +40,7 @@ module.exports = {
               maxAge: 900000,
               httpOnly: true,
               path: "/forgotpassword",
-              SameSite: None, Secure
+              SameSite: None, Secure: true
             })
             .status(201)
             .json({
