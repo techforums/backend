@@ -32,10 +32,10 @@ module.exports = {
           defaultLayout: false,
         },
         viewPath: path.resolve("./views/"),
-        extName: ".ejs", // Specify the file extension for EJS templates
+        extName: ".ejs", 
       };
       
-      transporter.use("compile", ejs(ejsOptions)); // Use EJS as the template engine
+      transporter.use("compile", ejs(ejsOptions)); 
       
       const mailOptions = {
         from: from,
