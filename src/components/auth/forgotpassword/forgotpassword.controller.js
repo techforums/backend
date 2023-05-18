@@ -73,7 +73,6 @@ module.exports = {
         }
       });
     } catch (err) {
-      console.log(userId)
       console.log(err);
       return res.status(500).json({
         status: 500,
